@@ -15,8 +15,10 @@
     "element-ui": "^2.15.8",
     "less": "^4.1.2",
     "less-loader": "4",
+    "lodash": "^4.17.21",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "webpack-dev-server": "2.9.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
@@ -52,7 +54,7 @@
     "vue-template-compiler": "^2.5.2",
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
-    "webpack-dev-server": "^2.9.1",
+    "webpack-cli": "^4.9.2",
     "webpack-merge": "^4.1.0"
   },
   "engines": {

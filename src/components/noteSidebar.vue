@@ -79,7 +79,7 @@
 <style lang="less">
 .noteSidebar {
   position: relative;
-  width: 290px;
+  width: 320px;
   border-right: 1px solid #ccc;
   background-color: #eee;
   .button{
@@ -117,14 +117,13 @@
 
   .menu {
     display: flex;
-
     div {
-      font-size: 12px;
-      padding: 2px 10px;
+      font-size: 14px;
+      padding: 6px 10px;
       flex: 1;
       border-right: 1px solid #ccc;
       border-bottom: 1px solid #ccc;
-
+      text-align: center;
       &:last-child {
         border-right: none;
       }
@@ -144,8 +143,8 @@
 
       a {
         display: flex;
-        padding: 3px 0;
-        font-size: 12px;
+        padding: 6px 0;
+        font-size: 13px;
         border: 2px solid transparent;
       }
 
@@ -157,6 +156,7 @@
       span {
         padding: 0 10px;
         flex: 1;
+        text-align: right;
       }
     }
   }
