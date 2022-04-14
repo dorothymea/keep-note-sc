@@ -17,7 +17,7 @@
               <span>{{notebook.noteCounts}}</span>
               <span class="delete" @click.stop.prevent="onDelete(notebook)">删除</span>
               <span class="edit" @click.stop.prevent="onEdit(notebook)">编辑</span>
-              <span class="date">{{onTimeFormat(notebook.createdAt)}}</span>
+              <span class="date">{{onTimeFormat(notebook.createdAt)}}前</span>
             </div>
           </router-link>
         </div>

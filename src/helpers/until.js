@@ -5,5 +5,5 @@ require('dayjs/locale/zh')
 dayjs.locale('zh')
 
 export function until(createdAt){
-  return dayjs().to(createdAt)
+  return dayjs().to(createdAt,true)
 }

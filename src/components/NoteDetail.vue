@@ -1,5 +1,6 @@
 <template>
   <div id="note-detail">
+    <note-sidebar/>
     <h1>notebookId:{{$route.query.notebookId}}</h1>
     <h1>noteId:{{$route.query.noteId}}</h1>
   </div>
@@ -7,7 +8,7 @@
 
 <script>
 import Auth from "../apis/auth";
-
+import noteSidebar from './noteSidebar'
 export default {
   data() {
     return {
@@ -21,6 +22,9 @@ export default {
           this.$router.push({path: '/login'})
         }
     })
+  },
+  components:{
+    noteSidebar
   }
 }
 </script>
