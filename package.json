@@ -16,6 +16,7 @@
     "less": "^4.1.2",
     "less-loader": "4",
     "lodash": "^4.17.21",
+    "markdown-it": "^12.3.2",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "webpack-dev-server": "2.9.1"

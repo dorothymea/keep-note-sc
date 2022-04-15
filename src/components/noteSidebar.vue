@@ -45,7 +45,7 @@
         .then(res =>{
           this.notebooks = res.data
           this.curBook = this.notebooks.find(notebook =>
-            notebook.id === this.$route.query.notebookId) ||this.notebooks[0]||{}
+            notebook.id == this.$route.query.notebookId) ||this.notebooks[0]||{}
           return Notes.getAll({notebookId:this.curBook.id})
         }).then(res =>{
           this.notes = res.data
