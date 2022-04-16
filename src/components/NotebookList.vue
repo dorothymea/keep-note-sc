@@ -17,7 +17,7 @@
               <span>{{notebook.noteCounts}}</span>
               <span class="delete" @click.stop.prevent="onDelete(notebook)">删除</span>
               <span class="edit" @click.stop.prevent="onEdit(notebook)">编辑</span>
-              <span class="date">{{onTimeFormat(notebook.createdAt)}}前</span>
+              <span class="date">{{notebook.untilCreated}}前</span>
             </div>
           </router-link>
         </div>
@@ -67,6 +67,7 @@ export default  {
       this.$prompt('输入新标题','编辑',{
         confirmButtonText:'确定',
         cancelButtonText:'取消',
+        inputValue: notebook.title,
         inputPattern:/^.{1,30}$/,
         inputErrorMessage:'标题不能为空，且不超过30个字符',
       }).then(({value})=>{

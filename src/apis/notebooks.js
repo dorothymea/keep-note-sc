@@ -1,4 +1,5 @@
 import request from "../helpers/request";
+import {until} from "../helpers/until";
 
 const URL = {
   GET:'/notebooks',
@@ -13,6 +14,10 @@ export default {
       request(URL.GET)
         .then(res => {
           res.data.sort((notebook1, notebook2) => notebook1.createdAt < notebook2.createdAt ? 1 : -1)
+          res.data.forEach(notebook=>{
+            notebook.untilCreated = until(notebook.createdAt)
+            notebook.untilUpdated = until(notebook.updatedAt)
+          })
           resolve(res)
         }).catch(err => {
         reject(err)
