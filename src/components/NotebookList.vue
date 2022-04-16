@@ -29,12 +29,13 @@
 <script>
 import Auth from "../apis/auth";
 import Notebooks from "../apis/notebooks";
-import {until} from "../helpers/until";
+import { mapState, mapActions, mapGetters } from 'vuex'
 export default  {
   data(){
-    return{
-      notebooks:[]
-    }
+    return{}
+  },
+  computed: {
+    ...mapGetters(['notebooks'])
   },
   created() {
     Auth.getInfo()
@@ -43,12 +44,15 @@ export default  {
           this.$router.push({path: '/login'})
         }
       })
-    Notebooks.getAll()
-      .then(res =>{
-        this.notebooks = res.data
-      })
+    this.getNotebooks()
   },
   methods: {
+    ...mapActions([
+      'getNotebooks',
+      'addNotebook',
+      'updateNotebook',
+      'deleteNotebook',
+    ]),
     onCreate() {
       this.$prompt('输入新笔记本标题','创建笔记本',{
         confirmButtonText:'确定',
@@ -56,10 +60,7 @@ export default  {
         inputPattern:/^.{1,30}$/,
         inputErrorMessage:'标题不能为空，且不超过30个字符',
       }).then(({value})=>{
-        return Notebooks.addNoteBook({title:value})
-      }).then( res =>{
-        this.notebooks.unshift(res.data)
-        this.$message.success(res.msg)
+        this.addNotebook({title:value})
       })
     },
     onEdit(notebook) {
@@ -72,10 +73,7 @@ export default  {
         inputErrorMessage:'标题不能为空，且不超过30个字符',
       }).then(({value})=>{
         title = value
-        return Notebooks.updateNotebook(notebook.id, {title})
-      }).then(res =>{
-        notebook.title = title
-        this.$message.success(res.msg)
+        this.updateNotebook({notebookId:notebook.id,title:value})
       })
     },
     onDelete(notebook) {
@@ -83,15 +81,11 @@ export default  {
         confirmButtonText:'确定',
         cancelButtonText:'取消',
         type:'warning'
-      }).then(()=>{
-        return Notebooks.deleteNotebook(notebook.id)
-      }).then(res =>{
-        this.notebooks.splice(this.notebooks.indexOf(notebook), 1)
-        this.$message.success(res.msg)
       })
-    },
-    onTimeFormat(createdAt){
-      return until(createdAt)
+        .then(()=>{
+          console.log('delete out')
+          this.deleteNotebook({notebookId:notebook.id,notebook:notebook})
+        })
     }
   }
 }

@@ -60,9 +60,6 @@ export default {
       })
     Bus.$once('update:notes', val => {
       this.curNote = val.find(note => note.id === this.$route.query.noteId) || {}
-      console.log('val,typeof this.curNote.id')
-      console.log(typeof val[0].id)
-      console.log(typeof this.curNote.id)
     })
   },
 
@@ -97,9 +94,6 @@ export default {
 
   beforeRouteUpdate (to, from, next) {
     this.curNote = this.notes.find(note => note.id == to.query.noteId) || {}
-    console.log('this.notes,typeof this.curNote.id')
-    console.log(typeof this.notes[0].id)
-    console.log(typeof this.curNote.id)
     next()
   }
 }

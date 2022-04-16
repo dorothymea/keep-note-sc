@@ -33,7 +33,17 @@ export default {
     return request(URL.DELETE.replace(':id',notebookId),'DELETE')
   },
 
-  addNoteBook({title=''} = {title:''}){
-    return request(URL.ADD,'POST',{title})
+  addNotebook({ title = ''} = { title: ''}) {
+    return new Promise((resolve, reject) => {
+      request(URL.ADD, 'POST', { title })
+        .then(res=>{
+          res.data.untilCreated = until(res.data.createdAt)
+          res.data.untilUpdated = until(res.data.updatedAt)
+          resolve(res)
+        }).catch(err =>{
+          reject(err)
+      })
+    })
+
   }
 }
