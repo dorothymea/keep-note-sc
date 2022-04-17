@@ -117,20 +117,12 @@ export default {
     }
   },
   created() {
-    Auth.getInfo()
-      .then(res => {
-        if(!res.isLogin) {
-          this.$router.push({ path: '/login' })
-        }
-      })
+    this.checkLogin({path:'/login'})
   },
-
-
-
   methods: {
     ...mapMutations(['setCurNote']),
     ...mapActions([
-      'updateNote','deleteNote'
+      'updateNote','deleteNote','checkLogin'
     ]),
     onUpdate: _.debounce(function() {
       this.updateNote({noteId:this.curNote.id,title:this.curNote.title,content:this.curNote.content})

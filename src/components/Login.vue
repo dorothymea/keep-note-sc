@@ -39,6 +39,8 @@
 
 import Bus from "../helpers/bus";
 import Auth from "../apis/auth";
+import {mapGetters,mapActions} from "vuex";
+
 Auth.getInfo().then(data =>{
   console.log(data)
 })
@@ -62,6 +64,7 @@ export default {
     }
   },
   methods:{
+    ...mapActions({loginUser:'login',registerUser:'register'}),
     showRegister(){
       this.isShowRegister = true
       this.isShowLogin = false
@@ -71,7 +74,7 @@ export default {
       this.isShowRegister = false
     },
     onRegister(){
-      if(! /^[a-zA-Z0-9_-]{4,16}$/.test(this.register.username)){
+      if(! /^[a-zA-Z0-9_]{4,16}$/.test(this.register.username)){
         this.register.isError = true
         this.register.notice = '用户名为4-16个字符，仅限于字母数字下划线减号'
         return
@@ -81,24 +84,19 @@ export default {
         this.register.notice = '密码长度为6~16个字符'
         return
       }
-      this.register.isError = false
-      this.register.notice = ''
 
-      console.log(`start register,username:${this.register.username},password:${this.register.password}`)
-      Auth.register({username:this.register.username,password:this.register.password})
-        .then(data =>{   //这个data 是什么？then函数的运行原理？
-          console.log(data)
-          this.register.isError = false
-          this.register.notice = ''
-          Bus.$emit('userInfo',{username:this.register.username})
-          this.$router.push({ path: 'notebooks' })
-        }).catch(data => {
+      this.registerUser({username:this.register.username,password:this.register.password})
+      .then(()=>{
+        this.register.isError = false
+        this.register.notice = ''
+        this.$router.push({path:'notebooks'})
+      }).catch(data =>{
         this.register.isError = true
         this.register.notice = data.msg
-        })
+      })
     },
     onLogin(){
-      if(! /^[a-zA-Z0-9_-]{4,16}$/.test(this.login.username)){
+      if(! /^[a-zA-Z0-9_]{4,16}$/.test(this.login.username)){
         this.login.isError = true
         this.login.notice = '用户名为4-16个字符，仅限于字母数字下划线减号'
         return
@@ -108,21 +106,15 @@ export default {
         this.login.notice = '密码长度为6~16个字符'
         return
       }
-      this.login.isError = false
-      this.login.notice = ''
-
-      console.log(`start login,username:${this.login.username},password:${this.login.password}`)
-      Auth.login({username:this.login.username,password:this.login.password})
-        .then(data =>{   //这个data 是什么？then函数的运行原理？
-          console.log(data)
-          this.login.isError = false
-          this.login.notice = ''
-          Bus.$emit('userInfo',{username:this.login.username})
-          this.$router.push({ path: 'notebooks' })
-        }).catch(data => {
+      this.loginUser({username:this.login.username,password:this.login.password})
+      .then(()=>{
+        this.login.isError = false
+        this.login.notice = ''
+        this.$router.push({path:'notebooks'})
+      }).catch(data =>{
         this.login.isError = true
         this.login.notice = data.msg
-        })
+      })
     }
   }
 }

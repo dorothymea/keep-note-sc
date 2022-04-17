@@ -27,9 +27,8 @@
 </template>
 
 <script>
-import Auth from "../apis/auth";
-import Notebooks from "../apis/notebooks";
-import { mapState, mapActions, mapGetters } from 'vuex'
+import {mapGetters,mapState,mapActions,mapMutations} from "vuex";
+
 export default  {
   data(){
     return{}
@@ -38,20 +37,13 @@ export default  {
     ...mapGetters(['notebooks'])
   },
   created() {
-    Auth.getInfo()
-      .then(res => {
-        if (!res.isLogin) {
-          this.$router.push({path: '/login'})
-        }
-      })
+    this.checkLogin({path:'/login'})
     this.getNotebooks()
   },
   methods: {
     ...mapActions([
-      'getNotebooks',
-      'addNotebook',
-      'updateNotebook',
-      'deleteNotebook',
+      'getNotebooks', 'addNotebook', 'updateNotebook',
+      'deleteNotebook','checkLogin'
     ]),
     onCreate() {
       this.$prompt('输入新笔记本标题','创建笔记本',{
