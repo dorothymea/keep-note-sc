@@ -11,7 +11,7 @@
       <router-link to="/trash" title="回收站">
         <i class="iconfont icon-trash"></i>
       </router-link>
-      <div class="logout" @click="logout">
+      <div class="logout" @click="onLogout">
         <i class="iconfont icon-logout"></i>
       </div>
     </div>
@@ -20,18 +20,16 @@
 
 <script>
 import avatar from '@/components/Avatar'
-import Auth from "../apis/auth"
+import {mapActions} from "vuex";
+
 export default {
   components:{
     avatar
   },
   methods:{
-    logout(){
-      Auth.logout()
-        .then(data=> {
-          console.log(data)
-          this.$router.push({path:'login'})
-        })
+    ...mapActions(['logout']),
+    onLogout(){
+      this.logout()
     }
   }
 }
@@ -40,16 +38,17 @@ export default {
 <style lang="less" scoped>
 #sidebar{
   position: relative;
-  width: 60px;
   text-align: center;
+  padding: 0 15px;
   background: lightseagreen;
 }
 .logout{
   position: absolute;
   bottom: 20px;
-  width: 100%;
-  text-align: center;
   cursor: pointer;
+}
+a{
+  padding-bottom: 20px;
 }
 .iconfont{
   color:#fff;
@@ -57,10 +56,8 @@ export default {
 }
 .icon{
   margin-top: 15px;
+  padding: 10px 0;
   display: flex;
   flex-direction: column;
-}
-.icon a{
-  padding: 10px 0;
 }
 </style>

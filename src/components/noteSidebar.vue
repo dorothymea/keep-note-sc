@@ -7,7 +7,7 @@
         <i class="iconfont icon-down"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item v-for="notebook in notebooks" :command="notebook.id">
+        <el-dropdown-item v-for="notebook in notebooks" :command="notebook.id" :key="notebook.id">
           {{notebook.title}}
         </el-dropdown-item>
       </el-dropdown-menu>
@@ -42,6 +42,13 @@
           return this.getNotes({ notebookId: this.curBook.id})
         }).then(() => {
         this.setCurNote({ curNoteId: this.$route.query.noteId })
+        this.$router.replace({
+          path:'/note',
+          query:{
+            noteId:this.curNote.id,
+            notebookId:this.curBook.id
+          }
+        })
       })
     },
 
@@ -53,7 +60,8 @@
       ...mapGetters([
         'notebooks',
         'notes',
-        'curBook'
+        'curBook',
+        'curNote'
       ])
     },
 
@@ -70,7 +78,17 @@
 
       handleCommand(notebookId) {
         this.$store.commit('setCurBook', { curBookId: notebookId})
-        this.getNotes({ notebookId })
+        this.getNotes({ notebookId }).then(()=>{
+          this.setCurNote({})
+          this.$router.replace({
+            path:'/note',
+            query:{
+              noteId:this.curNote.id,
+              notebookId:this.curBook.id
+            }
+          })
+        })
+
       },
 
       onAdd() {

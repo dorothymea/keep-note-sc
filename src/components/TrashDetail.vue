@@ -61,6 +61,10 @@ export default  {
     this.getTrashNotes()
     .then(()=>{
       this.setCurTrashNote({curTrashNoteId:this.$route.query.noteId})
+      this.$router.replace({
+        path: '/trash',
+        query: { noteId: this.curTrashNote.id }
+      })
     })
   },
   methods:{
@@ -68,11 +72,29 @@ export default  {
     ...mapActions(['checkLogin','deleteTrashNote','revertTrashNote', 'getTrashNotes','getNotebooks']),
 
     onDelete(){
-      console.log({ noteId: this.curTrashNote.id })
-      this.deleteTrashNote({noteId:this.curTrashNote.id})
+      this.$confirm('删除后将无法恢复','确定要删除吗？',{
+        confirmButtonText:'确定',
+        cancelButtonText:'取消',
+        type:'warning'
+      }).then(()=>{
+        return this.deleteTrashNote({noteId:this.curTrashNote.id})
+      }).then(()=>{
+        this.setCurTrashNote({})
+        this.$router.replace({
+          path: '/trash',
+          query: { noteId: this.curTrashNote.id }
+        })
+      })
     },
     onRevert(){
       this.revertTrashNote({noteId:this.curTrashNote.id})
+      .then(()=>{
+        this.setCurTrashNote({})
+        this.$router.replace({
+          path: '/trash',
+          query: { noteId: this.curTrashNote.id }
+        })
+      })
     },
     timeFormat(time){
       return dayjs(time).format('YYYY-MM-DD')
