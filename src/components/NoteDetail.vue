@@ -36,66 +36,6 @@ import {mapMutations,mapActions,mapGetters,mapState} from "vuex";
 
 let md = new MarkdownIt()
 
-// export default {
-//   components: {
-//     noteSidebar
-//   },
-//
-//   data () {
-//     return {
-//       curNote: {},
-//       notes: [],
-//       statusText: '笔记未改动',
-//       isShowPreview: false
-//     }
-//   },
-//
-//   created() {
-//     Auth.getInfo()
-//       .then(res => {
-//         if(!res.isLogin) {
-//           this.$router.push({ path: '/login' })
-//         }
-//       })
-//     Bus.$once('update:notes', val => {
-//       this.curNote = val.find(note => note.id === this.$route.query.noteId) || {}
-//     })
-//   },
-//
-//   computed: {
-//     previewContent() {
-//       return md.render(this.curNote.content||'')
-//     }
-//   },
-//
-//   methods: {
-//     updateNote: _.debounce(function() {
-//       Notes.updateNote({ noteId: this.curNote.id },
-//         { title: this.curNote.title, content: this.curNote.content })
-//         .then(data => {
-//           this.statusText = '已保存'
-//         }).catch(data => {
-//         this.statusText = '保存出错'
-//       })
-//
-//     }, 300),
-//
-//     deleteNote() {
-//       Notes.deleteNote({ noteId: this.curNote.id })
-//         .then(data => {
-//           this.$message.success(data.msg)
-//           this.notes.splice(this.notes.indexOf(this.curNote), 1)
-//           this.$router.replace({ path: '/note' })
-//         })
-//     }
-//
-//   },
-//
-//   beforeRouteUpdate (to, from, next) {
-//     this.curNote = this.notes.find(note => note.id == to.query.noteId) || {}
-//     next()
-//   }
-// }
 export default {
   components: {
     noteSidebar
