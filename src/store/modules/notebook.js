@@ -49,9 +49,8 @@ const actions ={
     return Notebook.addNotebook({title:payload.title})
         .then(res =>{
           console.log('add success...', res)
-          commit('addNotebook',{notebooks:res.data})
+          commit('addNotebook',{notebook:res.data})
           Message.success(res.msg)
-          // location.reload()
         })
   },
   updateNotebook({commit},payload){

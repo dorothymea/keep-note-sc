@@ -32,7 +32,7 @@ const mutations = {
   },
 
   deleteNote(state, payload) {
-    state.notes = state.notes.filter(note => note.id !== payload.noteId)
+    state.notes = state.notes.filter(note => note.id != payload.noteId)
   },
 
   setCurNote(state, payload) {

@@ -1,6 +1,6 @@
 <template>
   <div class="noteSidebar">
-    <span class="addNote button" @click="addNote">添加笔记</span>
+    <span class="addNote button" @click="onAdd">添加笔记</span>
     <el-dropdown class="notebookTitle" placement="bottom" @command="handleCommand">
       <span class="link">
         {{curBook.title}}
@@ -32,46 +32,98 @@
   import Bus from '../helpers/bus'
   import {until} from "../helpers/until";
   import Notes from "../apis/notes";
+  import {mapMutations,mapActions,mapGetters,mapState} from "vuex";
+  // export default {
+  //   data() {
+  //     return {
+  //       notebooks: [],
+  //       notes:[],
+  //       curBook: {}
+  //     }
+  //   },
+  //   created() {
+  //     Notebooks.getAll()
+  //       .then(res =>{
+  //         this.notebooks = res.data
+  //         this.curBook = this.notebooks.find(notebook =>
+  //           notebook.id == this.$route.query.notebookId) ||this.notebooks[0]||{}
+  //         return Notes.getAll({notebookId:this.curBook.id})
+  //       }).then(res =>{
+  //         this.notes = res.data
+  //         this.$emit('update:notes',this.notes)
+  //         Bus.$emit('update:notes',this.notes)
+  //     })
+  //   },
+  //   methods:{
+  //     handleCommand(notebookId){
+  //       this.curBook = this.notebooks.find(notebook => notebook.id === notebookId)
+  //       Notes.getAll({notebookId})
+  //         .then(res =>{
+  //           this.notes = res.data
+  //           this.$emit('update:notes',this.notes)
+  //         })
+  //     },
+  //     addNote(){
+  //       Notes.addNote({notebookId:this.curBook.id})
+  //       .then(res =>{
+  //         console.log(res)
+  //         this.notes.unshift(res.data)
+  //       })
+  //     },
+  //     onTimeFormat(time) {
+  //       return until(time);
+  //     }
+  //   }
+  // }
+
   export default {
-    data() {
-      return {
-        notebooks: [],
-        notes:[],
-        curBook: {}
-      }
-    },
     created() {
-      Notebooks.getAll()
-        .then(res =>{
-          this.notebooks = res.data
-          this.curBook = this.notebooks.find(notebook =>
-            notebook.id == this.$route.query.notebookId) ||this.notebooks[0]||{}
-          return Notes.getAll({notebookId:this.curBook.id})
-        }).then(res =>{
-          this.notes = res.data
-          this.$emit('update:notes',this.notes)
-          Bus.$emit('update:notes',this.notes)
+      console.log('created');
+      this.getNotebooks()
+        .then(() => {
+          console.log('got');
+          this.setCurBook({ curBookId: this.$route.query.notebookId })
+          return this.getNotes({ notebookId: this.curBook.id})
+        }).then(() => {
+        this.setCurNote({ curNoteId: this.$route.query.noteId })
       })
     },
-    methods:{
-      handleCommand(notebookId){
-        this.curBook = this.notebooks.find(notebook => notebook.id === notebookId)
-        Notes.getAll({notebookId})
-          .then(res =>{
-            this.notes = res.data
-            this.$emit('update:notes',this.notes)
-          })
+
+    data() {
+      return {}
+    },
+
+    computed: {
+      ...mapGetters([
+        'notebooks',
+        'notes',
+        'curBook'
+      ])
+    },
+
+    methods: {
+      ...mapMutations([
+        'setCurBook',
+        'setCurNote'
+      ]),
+      ...mapActions([
+        'getNotebooks',
+        'getNotes',
+        'addNote'
+      ]),
+
+      handleCommand(notebookId) {
+        this.$store.commit('setCurBook', { curBookId: notebookId})
+        this.getNotes({ notebookId })
       },
-      addNote(){
-        Notes.addNote({notebookId:this.curBook.id})
-        .then(res =>{
-          console.log(res)
-          this.notes.unshift(res.data)
-        })
+
+      onAdd() {
+        this.addNote({ notebookId: this.curBook.id })
       },
       onTimeFormat(time) {
         return until(time);
       }
+
     }
   }
 </script>
