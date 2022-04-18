@@ -24,10 +24,11 @@ export default {
 }
 html,body,#app{
   height: 100%;
+  overflow: hidden;
 }
 a{
   text-decoration: none;
-  color:salmon;
+  color:#444;
 }
 ul,li{
   list-style: none;

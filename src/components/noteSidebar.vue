@@ -108,16 +108,18 @@
   width: 320px;
   border-right: 1px solid #ccc;
   background-color: #eee;
+  overflow: auto;
+
   .button{
     cursor: pointer;
   }
   .addNote {
     position: absolute;
-    right: 5px;
-    top: 12px;
+    right: 8px;
+    top: 10px;
     color: #666;
-    font-size: 12px;
-    padding: 2px 4px;
+    font-size: 13px;
+    padding: 4px 4px;
     box-shadow: 0 0 2px 0 #ccc;
     border: none;
     z-index: 1;
@@ -140,7 +142,6 @@
   .el-dropdown-menu__item{
     width: 200px;
   }
-
   .menu {
     display: flex;
     div {
@@ -154,31 +155,25 @@
         border-right: none;
       }
     }
-
     .iconfont{
       font-size: 10px;
     }
   }
-
   .notes {
     li {
-
       &:nth-child(odd) {
         background-color: #f2f2f2;
       }
-
       a {
         display: flex;
         padding: 6px 0;
         font-size: 13px;
         border: 2px solid transparent;
       }
-
       .router-link-exact-active {
         border: 2px solid #81c0f3;
         border-radius: 3px;
       }
-
       span {
         padding: 0 10px;
         flex: 1;
@@ -186,8 +181,21 @@
       }
     }
   }
+
+
+}
+.noteSidebar::-webkit-scrollbar {
+  width: 10px;
 }
 
+.noteSidebar::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.3);
+}
+
+.noteSidebar::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #ddd;
+}
 </style>
 
 

@@ -11,13 +11,17 @@
         <h3>笔记本列表({{notebooks.length}})</h3>
         <div class="list">
           <router-link v-for="notebook in notebooks" :to="`/note?notebookId=${notebook.id}`" class="notebook" :key="notebook.title">
-            <div>
-              <span class="iconfont icon-notebook"></span>
-              {{notebook.title}}
-              <span>{{notebook.noteCounts}}</span>
-              <span class="delete" @click.stop.prevent="onDelete(notebook)">删除</span>
-              <span class="edit" @click.stop.prevent="onEdit(notebook)">编辑</span>
-              <span class="date">{{notebook.untilCreated}}前</span>
+            <div class="linkList">
+              <div class="text">
+                <span class="iconfont icon-notebook"></span>
+                {{notebook.title}}
+                <span class="count">{{notebook.noteCounts}}</span>
+              </div>
+              <div class="action">
+                <span class="date">{{notebook.untilCreated}}前</span>
+                <span class="edit" @click.stop.prevent="onEdit(notebook)">编辑</span>
+                <span class="delete" @click.stop.prevent="onDelete(notebook)">删除</span>
+              </div>
             </div>
           </router-link>
         </div>
@@ -86,7 +90,6 @@ export default  {
 <style lang="less" scoped>
 #notebooks{
   flex: 1;
-
   .button {
     font-size: 16px;
     color: #666;
@@ -110,30 +113,35 @@ export default  {
     margin: 0 auto;
   }
 
-
   main h3{
-    font-size: 16px;
+    font-size: 17px;
     color: #000;
   }
-
   main .list {
-    margin-top: 10px;
+    margin-top: 20px;
     font-size: 18px;
     color: #666;
     background-color: #fff;
     border-radius: 4px;
   }
-  main .list span {
-    font-size: 16px;
-    color: #b3c0c8;
+  .linkList{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .action,.count{
+      font-size: 16px;
+      color: #b3c0c8;
+    }
+    .count{
+      padding-left:5px ;
+    }
+    .delete,.edit,.date{
+      padding: 0 5px;
+    }
   }
-  main .date,
-  main .delete,
-  main .edit{
-    float: right;
-    margin-left: 10px;
-  }
-  main .iconfont {
+
+.iconfont {
     color: #1687ea;
     margin-right: 4px;
   }
@@ -146,8 +154,7 @@ export default  {
   }
 
   main a.notebook div {
-    border-bottom: 1px solid #ebebeb;
-    padding: 20px 20px;
+    padding: 12px 10px;
   }
 }
 </style>

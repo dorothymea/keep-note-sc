@@ -21,7 +21,7 @@
       <div class="topBar">
         <div class="notice">
           <span>创建日期:{{timeFormat(curTrashNote.createdAt)}}</span>
-          <span>上次更新:{{curTrashNote.untilUpdated}}</span>
+          <span>更新于:{{curTrashNote.untilUpdated}}前</span>
           <span>所属笔记本：{{belongTo}}</span>
         </div>
         <div class="action">
@@ -142,23 +142,19 @@ export default  {
   }
   .notes {
     li {
-
       &:nth-child(odd) {
         background-color: #f2f2f2;
       }
-
       a {
         display: flex;
         padding: 6px 0;
         font-size: 13px;
         border: 2px solid transparent;
       }
-
       .router-link-exact-active {
         border: 2px solid #81c0f3;
         border-radius: 3px;
       }
-
       span {
         padding: 0 10px;
         flex: 1;
@@ -181,15 +177,31 @@ export default  {
     justify-content: space-between;
     button{
       border: none;
-      color:#999 ;
+      color:#888 ;
+      font-size: 15px;
+      padding: 0 5px;
+    }
+    span{
+      padding: 0 5px;
     }
   }
   .noteTitle{
-    font-size: 20px;
+    min-height: 50px;
+    font-size: 25px;
     padding: 15px 20px;
+    background: #FFFFFF;
+    box-shadow: inset 0 0 0 1px rgba(20, 21, 20, .2);
   }
   .page{
     flex: 1;
+    height: -moz-calc(100% - 70px);
+    height: -webkit-calc(100% - 70px);
+    height: calc(100% - 70px);
+  }
+  .preview{
+    height: 100%;
+    padding: 20px 20px;
+    background: #FFF;font-size: 16px;
   }
 
 }

@@ -6,12 +6,12 @@
       <div class="detail" v-show="curNote.id">
         <div class="topBar">
           <div class="notice">
-            <span>创建日期{{curNote.untilCreated}}</span>
-            <span>更新日期{{curNote.untilUpdated}}</span>
+            <span>创建于：{{curNote.untilCreated}}前</span>
+            <span>上次更新：{{curNote.untilUpdated}}前</span>
             <span>{{statusText}}</span>
           </div>
           <div class="button">
-            <span class="icon el-icon-delete" @click="onDelete"></span>
+            <span title="删除" class="icon el-icon-delete" @click="onDelete"></span>
             <span class="icon el-icon-full-screen" @click="isShowPreview=!isShowPreview"></span>
           </div>
         </div>
@@ -28,7 +28,6 @@
 </template>
 
 <script>
-import Auth from "../apis/auth";
 import noteSidebar from './noteSidebar'
 import _ from 'lodash'
 import MarkdownIt from 'markdown-it'
@@ -92,7 +91,7 @@ export default {
 
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
   @import url(../assets/noteDetail.less);
   #note{
     display:flex;
